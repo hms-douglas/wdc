@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Douglas Silva :: Dect - 2023 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>WDC :: Watch Dial Creator</title>
+    <link rel="shortcut icon" href="img/favicon.ico" id="favicon">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="ui-navbar">
+        <div class="ui-btn_navbar" id="NEW">
+            <i class="material-symbols-rounded">draft</i>
+            <label>New</label>
+        </div>
+
+        <div class="ui-btn_navbar" id="EXPORT">
+            <i class="material-symbols-rounded">download</i>
+            <label>Export</label>
+        </div>
+
+        <div class="ui-navbar-divisor"></div>
+
+        <div class="ui-btn_navbar active" id="CONVERT" data-type="range">
+            <i class="material-symbols-rounded">toggle_on</i>
+            <label>Range</label>
+        </div>
+
+        <div class="ui-btn_navbar active" id="SKIN">
+            <i class="material-symbols-rounded">watch</i>
+            <label>Skin</label>
+        </div>
+
+        <div class="ui-btn_navbar" id="INFO">
+            <i class="material-symbols-rounded">info</i>
+            <label>About</label>
+        </div>
+
+        <div class="ui-btn_navbar active beta" data-beta id="BETA">
+            <i class="material-symbols-rounded">labs</i>
+            <label>Beta</label>
+        </div>
+    </div>
+
+    <div class="ui-body">
+        <div id="LAYER_CONTAINER">
+            <div class="ui-layer-menu">
+                <i class="material-symbols-rounded beta" data-beta id="LAYER_OPTION_FROM_VISIBLE" data-tooltip="Layer from visible (fixed)">library_add</i>
+                <i class="material-symbols-rounded" id="LAYER_OPTION_DELETE_ALL" data-tooltip="Delete all">delete_forever</i>
+            </div>
+
+            <div class="ui-layer-body">
+                <div class="ui-group">
+                    <input type="checkbox" class="ui-group-title" id="GROUP_LAYER_NUMBERS" checked>
+                    <label class="ui-group-label" for="GROUP_LAYER_NUMBERS">NUMBER</label>
+
+                    <div class="ui-group-content" id="GROUP_NUMBERS_CONTENT"></div>
+                </div>
+
+                <div class="ui-group">
+                    <input type="checkbox" class="ui-group-title" id="GROUP_LAYER_MARK" checked>
+                    <label class="ui-group-label" for="GROUP_LAYER_MARK">MARK</label>
+
+                    <div class="ui-group-content" id="GROUP_MARK_CONTENT"></div>
+                </div>
+
+                <div class="ui-group beta" data-beta>
+                    <input type="checkbox" class="ui-group-title" id="GROUP_LAYER_FIXED" checked>
+                    <label class="ui-group-label" for="GROUP_LAYER_FIXED">FIXED LAYER</label>
+
+                    <div class="ui-group-content" id="GROUP_FIXED_CONTENT"></div>
+                </div>
+            </div>
+
+            <div id="TOOLTIP_VALUE"></div>
+        </div>
+
+        <div id="WATCH_CONTAINER">
+            <div class="ui-watch skin" id="WATCH">
+                <div id="SCREEN"></div>
+            </div>
+
+            <input id="ZOOM_VALUE" type="number" disabled>
+            <input id="WATCH_SCREEN_RESOLUTION" type="number" placeholder="450x450" step="1" disabled>
+
+            <div class="ui-watch-zoom-container">
+                <i class="material-symbols-rounded" id="ZOOM_OUT">zoom_out</i>
+                    <input type="range" id="ZOOM" min="0" max="2" step="0.01" value="1">
+                <i class="material-symbols-rounded" id="ZOOM_IN">zoom_in</i>
+            </div>
+        </div>
+
+        <div id="OPTIONS_CONTAINER">
+            <div class="ui-group">
+                <input type="checkbox" class="ui-group-title" id="GROUP_GENERAL" checked>
+                <label class="ui-group-label" for="GROUP_GENERAL">GENERAL</label>
+                
+                <div class="ui-group-content">
+                    <div class="ui-option">
+                        <label>Font</label>
+                        <input type="file" id="FONT" accept=".ttf">
+                        <div class="ui-btn" id="FONT_INPUT_BTN">Upload font (.ttf)</div>
+                    </div>
+
+                    <div class="ui-option">
+                        <label>Rotate screen</label>
+                        <input class="convert" type="range" id="SCREEN_ROTATE" min="0" max="360" step="0.1" value="0">
+                    </div>
+                </div>
+
+            <div class="ui-group">
+                <input type="checkbox" class="ui-group-title" id="GROUP_WATCHFACE" checked>
+                <label class="ui-group-label" for="GROUP_WATCHFACE">WATCHFACE</label>
+                
+                <div class="ui-group-content">
+                    <div class="ui-option">
+                        <label>Background</label>
+                        <div class="ui-color-container">
+                            <input type="color" id="BACKGROUND_COLOR">
+                        </div>
+                    </div>
+            
+                    <div class="ui-option ui-option-clickable">
+                        <label class="ui-label-checkbox" for="BACKGROUND_TRANSPARENT">Color to alpha</label>
+                        <input type="checkbox" id="BACKGROUND_TRANSPARENT" checked>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-group">
+                <input type="checkbox" class="ui-group-title" id="GROUP_NUMBERS" checked>
+                <label class="ui-group-label" for="GROUP_NUMBERS">NUMBER</label>
+
+                <div class="ui-group-content">
+                    <div class="ui-option">
+                        <div class="ui-btn" id="NUMBERS">Generate numbers</div>
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>From 1 to</label>
+                        <input type="number" id="AMOUNT_NUMBERS" value="12">
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Font size</label>
+                        <input class="convert" type="range" id="NUMBERS_SIZE" min="0" max="150" step="1" value="50">
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Margin from border</label>
+                        <input class="convert" type="range" id="NUMBERS_SPACE" min="1" max="42" step="0.01" value="25">
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Rotate (around the screen)</label>
+                        <input class="convert" type="range" id="NUMBERS_ROTATE" min="0" max="360" step="0.1" value="0">
+                    </div>
+                    <div class="ui-option beta" data-beta>
+                        <label>Visibility</label>
+                        <div class="ui-btn" id="NUMBERS_VIS">Hide</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui-group">
+                <input type="checkbox" class="ui-group-title" id="GROUP_MARKS" checked>
+                <label class="ui-group-label" for="GROUP_MARKS">MARK</label>
+
+                <div class="ui-group-content">
+                    <div class="ui-option">
+                        <input type="file" id="MARK" accept="image/*">
+                        <div class="ui-btn" id="MARK_INPUT_BTN">Upload image</div>
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Amount</label>
+                        <input type="number" id="AMOUNT_MARK" value="12">
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Size</label>
+                        <input class="convert" type="range" id="MARK_SIZE" min="0.01" max="4" step="0.01" value="1">
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Margin from border</label>
+                        <input class="convert" type="range" id="MARK_SPACE" min="1" max="42" step="0.01" value="25">
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Rotate mark (around it self)</label>
+                        <input class="convert" type="range" id="MARK_ROTATE" min="0" max="360" step="0.1" value="45">
+                    </div>
+            
+                    <div class="ui-option">
+                        <label>Rotate mark (around the screen)</label>
+                        <input class="convert" type="range" id="MARK_ROTATE_DIAL" min="0" max="360" step="0.1" value="0">
+                    </div>
+            
+                    <div class="ui-option beta" data-beta>
+                        <label>Visibility</label>
+                        <div class="ui-btn" id="MARK_VIS">Hide</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="LOADING">
+        <div class="ui-loader-container">
+            <div class="ui-loader-ball"></div>
+            <div class="ui-loader-ball"></div>
+            <div class="ui-loader-ball"></div>
+            <div class="ui-loader-ball"></div>
+        </div>
+
+        <div id="LOADING_MESSAGE">Loading</div>
+    </div>
+
+    <div class="ui-hidden" id="HIDDEN">
+        <img id="MARK_FILE">
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
